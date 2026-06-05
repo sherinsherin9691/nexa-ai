@@ -1,0 +1,24 @@
+# Environments
+.env
+
+# Databases
+*.db
+*.sqlite3
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+.system_generated/
+
+# Editors & IDEs
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp

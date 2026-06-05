@@ -1,0 +1,16 @@
+{
+  "intents": [
+    {
+      "patterns": ["hi", "hello", "hey"],
+      "responses": ["Hello!", "Hi there!", "Hey! How can I help you?"]
+    },
+    {
+      "patterns": ["how are you"],
+      "responses": ["I'm fine!", "Doing great!", "All good!"]
+    },
+    {
+      "patterns": ["bye"],
+      "responses": ["Goodbye!", "See you later!", "Bye!"]
+    }
+  ]
+}
