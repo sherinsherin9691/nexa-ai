@@ -22,3 +22,7 @@ __pycache__/
 *.njsproj
 *.sln
 *.swp
+
+# Embedded repositories
+ai-ml-chatbox/
+
