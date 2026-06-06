@@ -105,7 +105,7 @@
     <div class="hero-section">
 
   <div class="robot-wrap">
-   <img src="{{ url_for('static', filename='images/bg.png') }}?v=7" class="hero-image">
+   <img src="{{ url_for('static', filename='images/bg.png') }}?v=8" class="hero-image">
 
     <div class="eye eye-left"></div>
     <div class="eye eye-right"></div>
@@ -178,12 +178,12 @@
     const rect = robotWrap.getBoundingClientRect();
     
     // Left eye static center in viewport
-    const leftCenterX = rect.left + rect.width * 0.272658;
-    const leftCenterY = rect.top + rect.height * 0.512538;
+    const leftCenterX = rect.left + rect.width * 0.398104;
+    const leftCenterY = rect.top + rect.height * 0.280498;
     
     // Right eye static center in viewport
-    const rightCenterX = rect.left + rect.width * 0.660688;
-    const rightCenterY = rect.top + rect.height * 0.492555;
+    const rightCenterX = rect.left + rect.width * 0.644966;
+    const rightCenterY = rect.top + rect.height * 0.264651;
 
     // Left eye delta
     const dxLeft = e.clientX - leftCenterX;
