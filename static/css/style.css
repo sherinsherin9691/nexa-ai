@@ -1105,10 +1105,10 @@
 
 .hero-section {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
+  gap: 1rem;
   margin-top: 1.5rem;
   position: relative;
   z-index: 1;
@@ -1119,54 +1119,57 @@
   position: relative;
   display: inline-block;
   width: fit-content;
+  margin: 0 auto;
   flex-shrink: 0;
 }
 
 .hero-image {
-  width: 440px;
+  width: 330px;
   height: auto;
   object-fit: contain;
-  opacity: 0.60;
+  opacity: 0.9;
   filter: brightness(0.92) saturate(0.85);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .hero-image:hover {
-  opacity: 0.95;
+  opacity: 1;
   transform: scale(1.02);
 }
 
 .hero-text {
   flex-shrink: 0;
-  text-align: left;
+  text-align: center;
 }
 
 .bottom-text {
   font-family: 'DM Serif Display', serif;
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 500;
   color: #222;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .eye {
   position: absolute;
-  width: 2.04%;
-  height: 5.44%;
+  width: 10px;
+  height: 15px;
   background: #181818;
   border-radius: 50%;
   z-index: 999;
+  margin-left: -5px;
+  margin-top: -7.5px;
   transition: transform .08s ease-out;
 }
 
 .eye-left {
-  top: 21.75%;
-  left: 74.49%;
+  top: 49.09%;
+  left: 45.07%;
 }
 
 .eye-right {
-  top: 21.75%;
-  left: 31.63%;
+  top: 47.83%;
+  left: 57.21%;
 }
 
 /* Action Boxes placed below Chat input */
@@ -1175,36 +1178,37 @@
   justify-content: center;
   gap: 1.25rem;
   width: 100%;
-  margin-top: 1.5rem;
+  max-width: 580px;
+  margin: 1.5rem auto 0;
 }
 
 .action-box {
   flex: 1;
-  max-width: 140px;
-  height: 105px;
+  max-width: 150px;
+  height: 95px;
   background: #ffffff;
   border: 1.5px solid #fce8f0;
-  border-radius: 1.2rem;
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.04);
+  box-shadow: 0 6px 16px rgba(168, 85, 247, 0.03);
   transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
 }
 
 .action-box:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   background: var(--pink-bg);
   border-color: var(--purple-light);
-  box-shadow: 0 12px 28px rgba(168, 85, 247, 0.12);
+  box-shadow: 0 10px 24px rgba(168, 85, 247, 0.1);
 }
 
 .box-icon {
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: rgba(168, 85, 247, 0.08);
   display: flex;
@@ -1220,18 +1224,22 @@
 }
 
 .box-icon svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   stroke: currentColor;
   fill: none;
   stroke-width: 2.2;
 }
 
 .box-title {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: var(--text-dark);
   text-align: center;
+}
+
+.mobile-logo {
+  display: none;
 }
 
 /* ==========================================================================
@@ -1409,6 +1417,37 @@
 
   .box-title {
     font-size: 0.7rem !important;
+  }
+
+  .mobile-logo {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .mobile-logo-img {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+  }
+  
+  .mobile-logo-text {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-dark);
+  }
+
+  .right-panel {
+    flex-direction: column !important;
+  }
+
+  .eye {
+    width: 6px !important;
+    height: 9px !important;
+    margin-left: -3px !important;
+    margin-top: -4.5px !important;
   }
 
   /* Chat Page (/chat) specifics */
