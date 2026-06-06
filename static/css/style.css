@@ -1149,13 +1149,16 @@
 
 .eye {
   position: absolute;
-  width: 6px;
-  height: 9px;
-  background: #181818;
-  border-radius: 50%;
+  width: 10px;
+  height: 5px;
+  border: 2px solid #5ce1e6; /* Cyan glowing eye matching visor curves */
+  border-bottom: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background: transparent;
   z-index: 999;
-  margin-left: -3px;
-  margin-top: -4.5px;
+  margin-left: -5px;
+  margin-top: -2.5px;
   transition: transform .08s ease-out;
 }
 
@@ -1421,10 +1424,15 @@
   }
 
   .eye {
-    width: 4px !important;
-    height: 6.5px !important;
-    margin-left: -2px !important;
-    margin-top: -3.25px !important;
+    width: 8px !important;
+    height: 4px !important;
+    border-width: 1.5px !important;
+    border-bottom: none !important;
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
+    background: transparent !important;
+    margin-left: -4px !important;
+    margin-top: -2px !important;
   }
 
   /* Chat Page (/chat) specifics */
