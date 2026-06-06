@@ -15,17 +15,13 @@
      MAIN WRAPPER
   ========================= */
   
-  .page-wrapper{
-    width:98vw;
-    max-width:1200px;
-    height:96vh;
-    max-height:850px;
-    margin:2vh auto;
-    border-radius:35px;
-    overflow:hidden;
-    display:flex;
-    box-shadow:
-    0 30px 80px rgba(0,0,0,0.18);
+  .page-wrapper {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    overflow: hidden;
+    display: flex;
     position: relative;
     flex-shrink: 0;
     transition: all 0.3s ease;
@@ -351,6 +347,7 @@
     font-size:28px;
     font-weight:200px;
     color:#151414;
+    white-space: nowrap;
   }
   
   .welcome-subtitle{
@@ -1117,15 +1114,15 @@
 
 .robot-wrap {
   position: relative;
-  display: inline-block;
-  width: fit-content;
+  width: 130px;
   margin: 0;
   flex-shrink: 0;
 }
 
 .hero-image {
-  width: 130px;
+  width: 100%;
   height: auto;
+  display: block;
   object-fit: contain;
   opacity: 0.95;
   filter: brightness(0.92) saturate(0.85);
@@ -1152,13 +1149,13 @@
 
 .eye {
   position: absolute;
-  width: 4px;
-  height: 6px;
+  width: 6px;
+  height: 9px;
   background: #181818;
   border-radius: 50%;
   z-index: 999;
-  margin-left: -2px;
-  margin-top: -3px;
+  margin-left: -3px;
+  margin-top: -4.5px;
   transition: transform .08s ease-out;
 }
 
@@ -1361,9 +1358,14 @@
     margin-top: 5px !important;
   }
 
-  .hero-image {
+  .robot-wrap {
     width: 110px !important;
-    max-width: 50% !important;
+    margin: 0 auto !important;
+  }
+
+  .hero-image {
+    width: 100% !important;
+    max-width: 100% !important;
     margin-top: 0 !important;
   }
 
@@ -1419,10 +1421,10 @@
   }
 
   .eye {
-    width: 3px !important;
-    height: 5px !important;
-    margin-left: -1.5px !important;
-    margin-top: -2.5px !important;
+    width: 4px !important;
+    height: 6.5px !important;
+    margin-left: -2px !important;
+    margin-top: -3.25px !important;
   }
 
   /* Chat Page (/chat) specifics */
