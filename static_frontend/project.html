@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>NeXa – Project Dashboard</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #f0e8f5;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- Logo -->
+    <div class="logo">
+      <img src="images/logo.png" alt="NeXa Logo"/>
+      <span class="logo-text">NeXa</span>
+    </div>
+
+    <ul class="nav">
+      <li class="nav-item" onclick="window.location.href='main.html'">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+          <path d="M9 21V12h6v9"/>
+        </svg>
+        Home
+      </li>
+      <li class="nav-item" onclick="window.location.href='chat.html'">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        New Chat
+      </li>
+      <li class="nav-item active" onclick="window.location.href='project.html'">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <rect x="4" y="2" width="16" height="20" rx="2"/>
+          <line x1="8" y1="6" x2="16" y2="6"/>
+          <line x1="8" y1="10" x2="16" y2="10"/>
+          <line x1="8" y1="14" x2="12" y2="14"/>
+        </svg>
+        Project
+      </li>
+      <li class="nav-item" onclick="window.location.href='recent.html'">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        </svg>
+        Recent
+      </li>
+    </ul>
+
+    <div class="profile" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+      <span class="profile-label" style="font-size: 0.8rem; color: var(--text-muted);">Profile</span>
+      <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%;">
+        <div class="avatar">
+          <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" fill="#f472b6"/>
+            <circle cx="18" cy="14" r="7" fill="white" fill-opacity=".9"/>
+            <path d="M4 34c0-7.732 6.268-14 14-14s14 6.268 14 14" fill="white" fill-opacity=".9"/>
+          </svg>
+        </div>
+        <span class="profile-email" id="profileEmail" style="font-weight: 600; font-size: 0.8rem; color: var(--text-dark); word-break: break-all; max-width: 130px;">Guest</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
+        <div>
+          <div class="greeting-title" id="dynamicGreeting">Good Morning 🌸</div>
+          <div class="greeting-sub">Track and organize your studies.</div>
+        </div>
+      </div>
+
+      <div class="topbar-right" style="display: flex; align-items: center; gap: 1rem;">
+        <button class="logout-btn" onclick="localStorage.removeItem('user_email'); window.location.href='index.html'">
+          <svg viewBox="0 0 24 24">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- BOARD HEADER -->
+    <div class="project-board-header">
+      <h1>Project Board 📂</h1>
+      <button class="btn-add-project" onclick="createNewProject()">
+        <i class="fas fa-plus"></i> New Project
+      </button>
+    </div>
+
+    <!-- COLUMNS -->
+    <div class="project-container" id="projectContainer"></div>
+
+  </main>
+
+</div>
+
+<script>
+  // Populate email display
+  const email = localStorage.getItem("user_email") || "Guest";
+  const profileEmail = document.getElementById("profileEmail");
+  if (profileEmail) {
+    profileEmail.innerText = email;
+    profileEmail.title = email;
+  }
+</script>
+
+<script>
+  const BACKEND_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? ""
+    : "https://nexa-chatbot-0bj6.onrender.com";
+
+  let projects = [];
+
+  async function loadProjects() {
+    const container = document.getElementById("projectContainer");
+    container.innerHTML = "<div style='text-align: center; color: var(--text-muted); font-style: italic; padding: 2rem; width: 100%;'>Loading board...</div>";
+
+    try {
+      const res = await fetch(BACKEND_URL + "/api/projects", { credentials: "include" });
+      const data = await res.json();
+      if (data.success) {
+        projects = data.projects;
+        renderBoard();
+      } else {
+        container.innerHTML = "<div class='empty-project-state'>⚠️ Error loading projects.</div>";
+      }
+    } catch (err) {
+      container.innerHTML = "<div class='empty-project-state'>⚠️ Server error.</div>";
+    }
+  }
+
+  function renderBoard() {
+    const container = document.getElementById("projectContainer");
+    if (projects.length === 0) {
+      container.innerHTML = `<div class="empty-project-state">No active projects. Click "New Project" to organize your tasks!</div>`;
+      return;
+    }
+
+    container.innerHTML = projects.map(p => {
+      const tasksHTML = p.tasks.map(t => `
+        <div class="task-item ${t.completed ? 'completed' : ''}" id="task-${t.id}">
+          <input type="checkbox" class="task-checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask('${p.id}', '${t.id}', this.checked)"/>
+          <span class="task-text">${escapeHTML(t.text)}</span>
+        </div>
+      `).join("");
+
+      return `
+        <div class="project-column" id="project-${p.id}">
+          <div class="project-column-header">
+            <span class="project-column-title">${escapeHTML(p.name)}</span>
+            <button class="btn-delete-project" onclick="deleteProject('${p.id}')" title="Delete Project">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+          <div class="project-card-list">
+            ${tasksHTML}
+          </div>
+          <form class="add-task-form" onsubmit="addTask(event, '${p.id}')">
+            <input type="text" placeholder="Add task..." class="add-task-input" required/>
+            <button type="submit" class="btn-task-add">+</button>
+          </form>
+        </div>
+      `;
+    }).join("");
+  }
+
+  async function createNewProject() {
+    const name = prompt("Enter project name (e.g. Python Chatbot, Biology Assignment):");
+    if (!name || !name.trim()) return;
+
+    try {
+      const res = await fetch(BACKEND_URL + "/api/projects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name.trim() }),
+        credentials: "include"
+      });
+      const data = await res.json();
+      if (data.success) {
+        projects.unshift(data.project);
+        renderBoard();
+      } else {
+        alert(data.message || "Failed to create project.");
+      }
+    } catch (err) {
+      alert("Error contacting server.");
+    }
+  }
+
+  async function deleteProject(projectId) {
+    if (!confirm("Are you sure you want to delete this project and all its tasks?")) return;
+
+    try {
+      const res = await fetch(BACKEND_URL + "/api/projects/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ project_id: projectId }),
+        credentials: "include"
+      });
+      const data = await res.json();
+      if (data.success) {
+        projects = projects.filter(p => p.id !== projectId);
+        renderBoard();
+      } else {
+        alert(data.message || "Failed to delete project.");
+      }
+    } catch (err) {
+      alert("Error contacting server.");
+    }
+  }
+
+  async function addTask(e, projectId) {
+    e.preventDefault();
+    const form = e.target;
+    const input = form.querySelector(".add-task-input");
+    const text = input.value.trim();
+    if (!text) return;
+
+    try {
+      const res = await fetch(BACKEND_URL + "/api/projects/task", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ project_id: projectId, text: text }),
+        credentials: "include"
+      });
+      const data = await res.json();
+      if (data.success) {
+        const project = projects.find(p => p.id === projectId);
+        if (project) {
+          project.tasks.push(data.task);
+          renderBoard();
+        }
+      } else {
+        alert(data.message || "Failed to add task.");
+      }
+    } catch (err) {
+      alert("Error contacting server.");
+    }
+  }
+
+  async function toggleTask(projectId, taskId, isChecked) {
+    const taskItem = document.getElementById(`task-${taskId}`);
+    if (isChecked) {
+      taskItem.classList.add("completed");
+    } else {
+      taskItem.classList.remove("completed");
+    }
+
+    try {
+      const res = await fetch(BACKEND_URL + "/api/projects/toggle", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ project_id: projectId, task_id: taskId, completed: isChecked }),
+        credentials: "include"
+      });
+      const data = await res.json();
+      if (!data.success) {
+        alert(data.message || "Failed to update task.");
+        // Revert UI
+        const checkbox = taskItem.querySelector(".task-checkbox");
+        checkbox.checked = !isChecked;
+        taskItem.classList.toggle("completed");
+      } else {
+        // Update local state
+        const project = projects.find(p => p.id === projectId);
+        if (project) {
+          const task = project.tasks.find(t => t.id === taskId);
+          if (task) task.completed = isChecked;
+        }
+      }
+    } catch (err) {
+      alert("Error contacting server.");
+    }
+  }
+
+  function escapeHTML(str) {
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  loadProjects();
+</script>
+
+<!-- Dynamic Greeting Script -->
+<script>
+(function() {
+  const greetingEl = document.getElementById("dynamicGreeting");
+  if (greetingEl) {
+    const hour = new Date().getHours();
+    let greeting = "Good Morning 🌸";
+    if (hour >= 12 && hour < 17) {
+      greeting = "Good Afternoon ☀️";
+    } else if (hour >= 17 && hour < 22) {
+      greeting = "Good Evening 🌇";
+    } else if (hour >= 22 || hour < 5) {
+      greeting = "Good Night 🌙";
+    }
+    greetingEl.innerHTML = greeting;
+  }
+})();
+</script>
+
+<!-- Mobile Sidebar Toggle Script -->
+<script>
+  (function() {
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.createElement('div');
+    overlay.className = 'sidebar-overlay';
+    document.body.appendChild(overlay);
+
+    if (menuToggle && sidebar) {
+      menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('active');
+      });
+    }
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    });
+  })();
+</script>
+
+</body>
+</html>

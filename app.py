@@ -1,5 +1,6 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask_cors import CORS
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from datetime import datetime
@@ -13,6 +14,21 @@ load_dotenv(override=True)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "nexa_super_secret_session_key_129837")
+
+# Configure CORS to allow local hosts and all Vercel subdomains
+CORS(app, supports_credentials=True, origins=[
+    "http://localhost:5000",
+    "http://127.0.0.1:5000",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    r"https://.*\.vercel\.app"
+])
+
+# Configure session cookies for cross-domain usage
+app.config.update(
+    SESSION_COOKIE_SAMESITE="None",
+    SESSION_COOKIE_SECURE=True
+)
 
 # Secure credentials configuration
 ALLOWED_EMAIL = os.environ.get("ALLOWED_EMAIL", "nexa@chatbot.com").strip().lower()

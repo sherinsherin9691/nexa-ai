@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>NeXa – Recent Chats</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #f0e8f5;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- Logo -->
+    <div class="logo">
+      <img src="images/logo.png" alt="NeXa Logo"/>
+      <span class="logo-text">NeXa</span>
+    </div>
+
+    <ul class="nav">
+      <li class="nav-item" onclick="window.location.href='main.html'">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+          <path d="M9 21V12h6v9"/>
+        </svg>
+        Home
+      </li>
+      <li class="nav-item" onclick="window.location.href='chat.html'">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        New Chat
+      </li>
+      <li class="nav-item" onclick="window.location.href='project.html'">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <rect x="4" y="2" width="16" height="20" rx="2"/>
+          <line x1="8" y1="6" x2="16" y2="6"/>
+          <line x1="8" y1="10" x2="16" y2="10"/>
+          <line x1="8" y1="14" x2="12" y2="14"/>
+        </svg>
+        Project
+      </li>
+      <li class="nav-item active" onclick="window.location.href='recent.html'">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        </svg>
+        Recent
+      </li>
+    </ul>
+
+    <div class="profile" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+      <span class="profile-label" style="font-size: 0.8rem; color: var(--text-muted);">Profile</span>
+      <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%;">
+        <div class="avatar">
+          <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" fill="#f472b6"/>
+            <circle cx="18" cy="14" r="7" fill="white" fill-opacity=".9"/>
+            <path d="M4 34c0-7.732 6.268-14 14-14s14 6.268 14 14" fill="white" fill-opacity=".9"/>
+          </svg>
+        </div>
+        <span class="profile-email" id="profileEmail" style="font-weight: 600; font-size: 0.8rem; color: var(--text-dark); word-break: break-all; max-width: 130px;">Guest</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="recent-main">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
+        <div>
+          <div class="greeting-title" id="dynamicGreeting">Good Morning 🌸</div>
+          <div class="greeting-sub">Review your learning journey.</div>
+        </div>
+      </div>
+
+      <div class="topbar-right" style="display: flex; align-items: center; gap: 1rem;">
+        <button class="logout-btn" onclick="localStorage.removeItem('user_email'); window.location.href='index.html'">
+          <svg viewBox="0 0 24 24">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <h1>Recent Chats 💬</h1>
+
+    <!-- SEARCH -->
+    <input type="text" class="search-input" placeholder="Search chats by title..." oninput="filterChats()" id="searchInput"/>
+
+    <!-- LIST -->
+    <div class="recent-list" id="recentList"></div>
+
+  </main>
+
+</div>
+
+<script>
+  // Populate email display
+  const email = localStorage.getItem("user_email") || "Guest";
+  const profileEmail = document.getElementById("profileEmail");
+  if (profileEmail) {
+    profileEmail.innerText = email;
+    profileEmail.title = email;
+  }
+</script>
+
+<script>
+  const BACKEND_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? ""
+    : "https://nexa-chatbot-0bj6.onrender.com";
+
+  let allChats = [];
+
+  async function loadRecentChats() {
+    const listEl = document.getElementById("recentList");
+    listEl.innerHTML = "<div style='text-align: center; color: var(--text-muted); font-style: italic; padding: 2rem;'>Loading chats...</div>";
+
+    try {
+      const res = await fetch(BACKEND_URL + "/api/recent_chats", { credentials: "include" });
+      const data = await res.json();
+      if (data.success) {
+        allChats = data.chats;
+        renderList();
+      } else {
+        listEl.innerHTML = "<div class='empty-recent-state'>⚠️ Error loading chats.</div>";
+      }
+    } catch (err) {
+      listEl.innerHTML = "<div class='empty-recent-state'>⚠️ Server error loading chats.</div>";
+    }
+  }
+
+  function renderList() {
+    const list = document.getElementById("recentList");
+    const query = document.getElementById("searchInput").value.toLowerCase().trim();
+
+    const filtered = allChats.filter(c =>
+      c.title.toLowerCase().includes(query)
+    );
+
+    if (filtered.length === 0) {
+      list.innerHTML = `<div class="empty-recent-state">${query ? 'No matching chats found.' : 'No recent chats found. Start a new chat to see it here!'}</div>`;
+      return;
+    }
+
+    list.innerHTML = filtered.map(c => `
+      <div class="chat-item" onclick="window.location.href='chat.html?session_id=${c.id}'">
+        <div class="chat-item-left">
+          <div class="chat-item-title">${escapeHTML(c.title)}</div>
+          <div class="chat-item-date">${c.created_at}</div>
+        </div>
+        <span class="chat-item-badge">Chat</span>
+      </div>
+    `).join("");
+  }
+
+  function escapeHTML(str) {
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function filterChats() {
+    renderList();
+  }
+
+  loadRecentChats();
+</script>
+
+<!-- Dynamic Greeting Script -->
+<script>
+(function() {
+  const greetingEl = document.getElementById("dynamicGreeting");
+  if (greetingEl) {
+    const hour = new Date().getHours();
+    let greeting = "Good Morning 🌸";
+    if (hour >= 12 && hour < 17) {
+      greeting = "Good Afternoon ☀️";
+    } else if (hour >= 17 && hour < 22) {
+      greeting = "Good Evening 🌇";
+    } else if (hour >= 22 || hour < 5) {
+      greeting = "Good Night 🌙";
+    }
+    greetingEl.innerHTML = greeting;
+  }
+})();
+</script>
+
+<!-- Mobile Sidebar Toggle Script -->
+<script>
+  (function() {
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.createElement('div');
+    overlay.className = 'sidebar-overlay';
+    document.body.appendChild(overlay);
+
+    if (menuToggle && sidebar) {
+      menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('active');
+      });
+    }
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    });
+  })();
+</script>
+
+</body>
+</html>
