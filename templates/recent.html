@@ -91,9 +91,12 @@
 
     <!-- TOP BAR -->
     <div class="topbar">
-      <div>
-        <div class="greeting-title" id="dynamicGreeting">Good Morning 🌸</div>
-        <div class="greeting-sub">Review your learning journey.</div>
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
+        <div>
+          <div class="greeting-title" id="dynamicGreeting">Good Morning 🌸</div>
+          <div class="greeting-sub">Review your learning journey.</div>
+        </div>
       </div>
 
       <div class="topbar-right" style="display: flex; align-items: center; gap: 1rem;">
@@ -198,6 +201,28 @@
     greetingEl.innerHTML = greeting;
   }
 })();
+</script>
+
+<!-- Mobile Sidebar Toggle Script -->
+<script>
+  (function() {
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.createElement('div');
+    overlay.className = 'sidebar-overlay';
+    document.body.appendChild(overlay);
+
+    if (menuToggle && sidebar) {
+      menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('active');
+      });
+    }
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    });
+  })();
 </script>
 
 </body>
