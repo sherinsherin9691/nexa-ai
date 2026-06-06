@@ -1108,7 +1108,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.75rem;
   margin-top: 1.5rem;
   position: relative;
   z-index: 1;
@@ -1124,10 +1124,10 @@
 }
 
 .hero-image {
-  width: 330px;
+  width: 140px;
   height: auto;
   object-fit: contain;
-  opacity: 0.9;
+  opacity: 0.95;
   filter: brightness(0.92) saturate(0.85);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
@@ -1144,21 +1144,21 @@
 
 .bottom-text {
   font-family: 'DM Serif Display', serif;
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 500;
   color: #222;
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
 .eye {
   position: absolute;
-  width: 10px;
-  height: 15px;
+  width: 4px;
+  height: 6px;
   background: #181818;
   border-radius: 50%;
   z-index: 999;
-  margin-left: -5px;
-  margin-top: -7.5px;
+  margin-left: -2px;
+  margin-top: -3px;
   transition: transform .08s ease-out;
 }
 
@@ -1172,70 +1172,45 @@
   left: 57.21%;
 }
 
-/* Action Boxes placed below Chat input */
-.action-boxes {
+/* Action Pills placed below Chat input */
+.action-pills {
   display: flex;
   justify-content: center;
-  gap: 1.25rem;
+  gap: 0.75rem;
   width: 100%;
   max-width: 580px;
-  margin: 1.5rem auto 0;
+  margin: 1.25rem auto 0;
 }
 
-.action-box {
-  flex: 1;
-  max-width: 150px;
-  height: 95px;
-  background: #ffffff;
-  border: 1.5px solid #fce8f0;
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  cursor: pointer;
-  box-shadow: 0 6px 16px rgba(168, 85, 247, 0.03);
-  transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
-}
-
-.action-box:hover {
-  transform: translateY(-3px);
-  background: var(--pink-bg);
-  border-color: var(--purple-light);
-  box-shadow: 0 10px 24px rgba(168, 85, 247, 0.1);
-}
-
-.box-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: rgba(168, 85, 247, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--purple);
-  transition: background 0.2s, color 0.2s;
-}
-
-.action-box:hover .box-icon {
-  background: #ffffff;
-  color: var(--purple);
-}
-
-.box-icon svg {
-  width: 16px;
-  height: 16px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 2.2;
-}
-
-.box-title {
-  font-size: 0.78rem;
+.pill {
+  padding: 0.7rem 1.25rem;
+  background: var(--pink-btn);
+  border: none;
+  border-radius: 3rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--text-dark);
-  text-align: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 4px 10px rgba(249, 200, 220, 0.25);
+}
+
+.pill:hover {
+  background: #f5aece;
+  transform: translateY(-2px);
+}
+
+.pill svg {
+  width: 15px;
+  height: 15px;
+  stroke: var(--text-dark);
+  fill: none;
+  stroke-width: 2.2;
 }
 
 .mobile-logo {
@@ -1260,9 +1235,9 @@
   /* Full screen app layout on mobile */
   .page-wrapper, .app-shell {
     width: 100vw !important;
-    height: 100vh !important;
+    height: 100dvh !important;
     max-width: 100vw !important;
-    max-height: 100vh !important;
+    max-height: 100dvh !important;
     margin: 0 !important;
     border-radius: 0 !important;
     box-shadow: none !important;
@@ -1300,7 +1275,7 @@
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
-    height: 100vh !important;
+    height: 100dvh !important;
     width: 260px !important;
     z-index: 10002 !important;
     transform: translateX(-100%) !important;
@@ -1318,7 +1293,7 @@
     top: 0 !important;
     left: 0 !important;
     width: 100vw !important;
-    height: 100vh !important;
+    height: 100dvh !important;
     background: rgba(0, 0, 0, 0.45) !important;
     backdrop-filter: blur(2px) !important;
     z-index: 10001 !important;
@@ -1367,18 +1342,23 @@
   /* Main panel adjust */
   .main, .recent-main {
     padding: 1.25rem !important;
+    height: 100% !important;
+  }
+
+  .input-section {
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom)) !important;
   }
 
   /* Home Page (/main) specifics */
   .hero-section {
     flex-direction: column !important;
-    gap: 1rem !important;
-    margin-top: 10px !important;
+    gap: 0.6rem !important;
+    margin-top: 5px !important;
   }
 
   .hero-image {
-    width: 210px !important;
-    max-width: 65% !important;
+    width: 100px !important;
+    max-width: 50% !important;
     margin-top: 0 !important;
   }
 
@@ -1387,36 +1367,26 @@
   }
 
   .bottom-text {
-    font-size: 22px !important;
+    font-size: 19px !important;
     text-align: center !important;
     margin-top: 0 !important;
     margin-right: 0 !important;
   }
 
-  .action-boxes {
+  .action-pills {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
     gap: 0.5rem !important;
     margin-top: 1.25rem !important;
   }
 
-  .action-box {
-    max-width: 95px !important;
-    height: 80px !important;
-    border-radius: 0.8rem !important;
-    gap: 0.35rem !important;
-  }
-
-  .box-icon {
-    width: 28px !important;
-    height: 28px !important;
-  }
-
-  .box-icon svg {
-    width: 14px !important;
-    height: 14px !important;
-  }
-
-  .box-title {
-    font-size: 0.7rem !important;
+  .pill {
+    padding: 0.55rem 0.95rem !important;
+    font-size: 0.76rem !important;
+    border-radius: 2rem !important;
   }
 
   .mobile-logo {
