@@ -1100,6 +1100,141 @@
 }
 
 /* ==========================================================================
+   HOME DASHBOARD ROBOT & ACTION CARDS
+   ========================================================================== */
+
+.hero-section {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.robot-wrap {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  flex-shrink: 0;
+}
+
+.hero-image {
+  width: 440px;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.60;
+  filter: brightness(0.92) saturate(0.85);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.hero-image:hover {
+  opacity: 0.95;
+  transform: scale(1.02);
+}
+
+.hero-text {
+  flex-shrink: 0;
+  text-align: left;
+}
+
+.bottom-text {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  font-weight: 500;
+  color: #222;
+  line-height: 1.25;
+}
+
+.eye {
+  position: absolute;
+  width: 2.04%;
+  height: 5.44%;
+  background: #181818;
+  border-radius: 50%;
+  z-index: 999;
+  transition: transform .08s ease-out;
+}
+
+.eye-left {
+  top: 21.75%;
+  left: 74.49%;
+}
+
+.eye-right {
+  top: 21.75%;
+  left: 31.63%;
+}
+
+/* Action Boxes placed below Chat input */
+.action-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.action-box {
+  flex: 1;
+  max-width: 140px;
+  height: 105px;
+  background: #ffffff;
+  border: 1.5px solid #fce8f0;
+  border-radius: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.04);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.action-box:hover {
+  transform: translateY(-4px);
+  background: var(--pink-bg);
+  border-color: var(--purple-light);
+  box-shadow: 0 12px 28px rgba(168, 85, 247, 0.12);
+}
+
+.box-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(168, 85, 247, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--purple);
+  transition: background 0.2s, color 0.2s;
+}
+
+.action-box:hover .box-icon {
+  background: #ffffff;
+  color: var(--purple);
+}
+
+.box-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.2;
+}
+
+.box-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  text-align: center;
+}
+
+/* ==========================================================================
    RESPONSIVENESS AND MOBILE MEDIA QUERIES
    ========================================================================== */
 
@@ -1228,14 +1363,19 @@
 
   /* Home Page (/main) specifics */
   .hero-section {
-    margin-top: 15px !important;
-    gap: 1.25rem !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    margin-top: 10px !important;
   }
 
   .hero-image {
     width: 210px !important;
     max-width: 65% !important;
     margin-top: 0 !important;
+  }
+
+  .hero-text {
+    text-align: center !important;
   }
 
   .bottom-text {
@@ -1245,17 +1385,30 @@
     margin-right: 0 !important;
   }
 
-  .action-pills {
-    flex-direction: column !important;
-    width: 100% !important;
-    gap: 0.6rem !important;
-    margin-top: 1.5rem !important;
+  .action-boxes {
+    gap: 0.5rem !important;
+    margin-top: 1.25rem !important;
   }
 
-  .pill {
-    padding: 0.85rem 1rem !important;
-    border-radius: 1.2rem !important;
-    font-size: 0.9rem !important;
+  .action-box {
+    max-width: 95px !important;
+    height: 80px !important;
+    border-radius: 0.8rem !important;
+    gap: 0.35rem !important;
+  }
+
+  .box-icon {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .box-icon svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .box-title {
+    font-size: 0.7rem !important;
   }
 
   /* Chat Page (/chat) specifics */

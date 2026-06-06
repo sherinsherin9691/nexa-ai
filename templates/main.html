@@ -17,60 +17,6 @@
       min-height: 100vh;
       background: #f0e8f5;
     }
-
-    .hero-section{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      margin-top:-70px;
-      position:relative;
-      z-index:1;
-    }
-
-    .bottom-text{
-      font-family:'DM Serif Display', serif;
-      font-size:30px;
-      font-weight:500px;
-      color:#222;
-      line-height:1.2;
-      margin-top: -110px;
-      margin-right: 260px;
-      text-align: left;
-    }
-
-    .hero-image{
-      width:490px;
-      height:auto;
-      object-fit:contain;
-      margin-top:-20px;
-      opacity:0.60;
-      filter: brightness(0.92) saturate(0.85);
-      transition:.3s ease;
-    }
-
-    .hero-image:hover{
-      opacity:0.9;
-      transform:scale(1.03);
-    }
-
-    .eye{
-      position: absolute;
-      width: 10px;
-      height: 15px;
-      background: #181818;
-      border-radius: 50%;
-      z-index: 999;
-      transition: transform .08s ease-out;
-    }
-    .eye-left{
-      top: 60px;
-      left: 365px;
-    }
-    .eye-right{
-      top: 60px;
-      right: 335px;
-    }
   </style>
 </head>
 <body>
@@ -188,36 +134,39 @@
     </div>
 
     
-    <div class="action-pills">
+    <div class="action-boxes">
 
-      <button class="pill" onclick="window.location.href='/chat?q=generate image'">
-      
-        <svg viewBox="0 0 24 24">
-          <rect x="3" y="3" width="18" height="18" rx="2"/>
-          <circle cx="8.5" cy="8.5" r="1.5"/>
-          <polyline points="21 15 16 10 5 21"/>
-        </svg>
-        Create image
-      </button>
+      <div class="action-box" onclick="window.location.href='/chat?q=generate image'">
+        <div class="box-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+        </div>
+        <div class="box-title">Create image</div>
+      </div>
 
-      <button class="pill" onclick="window.location.href='/recent'">
-      
-        <svg viewBox="0 0 24 24">
-          <path d="M12 20h9"/>
-          <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
-        </svg>
-        write or edit
-      </button>
+      <div class="action-box" onclick="window.location.href='/recent'">
+        <div class="box-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+        </div>
+        <div class="box-title">write or edit</div>
+      </div>
 
-      <button class="pill" onclick="window.location.href='/project'">
-      
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="2" y1="12" x2="22" y2="12"/>
-          <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z"/>
-        </svg>
-        look something up
-      </button>
+      <div class="action-box" onclick="window.location.href='/project'">
+        <div class="box-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z"/>
+          </svg>
+        </div>
+        <div class="box-title">something up</div>
+      </div>
 
     </div>
 
