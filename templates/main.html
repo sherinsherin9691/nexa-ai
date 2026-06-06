@@ -105,7 +105,7 @@
     <div class="hero-section">
 
   <div class="robot-wrap">
-   <img src="{{ url_for('static', filename='images/bg.png') }}?v=5" class="hero-image">
+   <img src="{{ url_for('static', filename='images/bg.png') }}?v=6" class="hero-image">
 
     <div class="eye eye-left"></div>
     <div class="eye eye-right"></div>
@@ -169,40 +169,37 @@
 
 </div>
 <script>
-  const eyes = document.querySelectorAll(".eye");
-  
+  const robotWrap = document.querySelector(".robot-wrap");
+  const eyeLeft = document.querySelector(".eye-left");
+  const eyeRight = document.querySelector(".eye-right");
+
   document.addEventListener("mousemove", (e) => {
-  
-    eyes.forEach((eye) => {
-  
-      const rect = eye.getBoundingClientRect();
-  
-      const eyeCenterX =
-        rect.left + rect.width / 2;
-  
-      const eyeCenterY =
-        rect.top + rect.height / 2;
-  
-      const deltaX =
-        e.clientX - eyeCenterX;
-  
-      const deltaY =
-        e.clientY - eyeCenterY;
+    if (!robotWrap || !eyeLeft || !eyeRight) return;
+    const rect = robotWrap.getBoundingClientRect();
+    
+    // Left eye static center in viewport
+    const leftCenterX = rect.left + rect.width * 0.272658;
+    const leftCenterY = rect.top + rect.height * 0.512538;
+    
+    // Right eye static center in viewport
+    const rightCenterX = rect.left + rect.width * 0.660688;
+    const rightCenterY = rect.top + rect.height * 0.492555;
 
-      const moveX =
-        Math.max(-3,
-        Math.min(3, deltaX / 25));
-  
-      const moveY =
-        Math.max(-3,
-        Math.min(3, deltaY / 25));
-  
-      eye.style.transform = `translate(${moveX}px, ${moveY}px)`;
-    });
-  
+    // Left eye delta
+    const dxLeft = e.clientX - leftCenterX;
+    const dyLeft = e.clientY - leftCenterY;
+    const moveXLeft = Math.max(-3, Math.min(3, dxLeft / 25));
+    const moveYLeft = Math.max(-3, Math.min(3, dyLeft / 25));
+    eyeLeft.style.transform = `translate(${moveXLeft}px, ${moveYLeft}px)`;
+
+    // Right eye delta
+    const dxRight = e.clientX - rightCenterX;
+    const dyRight = e.clientY - rightCenterY;
+    const moveXRight = Math.max(-3, Math.min(3, dxRight / 25));
+    const moveYRight = Math.max(-3, Math.min(3, dyRight / 25));
+    eyeRight.style.transform = `translate(${moveXRight}px, ${moveYRight}px)`;
   });
-
-    </script>
+</script>
 
     <script>
     function goToChat() {
