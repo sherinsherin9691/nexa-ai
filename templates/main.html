@@ -105,7 +105,7 @@
     <div class="hero-section">
 
   <div class="robot-wrap">
-   <img src="{{ url_for('static', filename='images/bg.png') }}" class="hero-image">
+   <img src="{{ url_for('static', filename='images/bg.png') }}?v=2" class="hero-image">
 
     <div class="eye eye-left"></div>
     <div class="eye eye-right"></div>
@@ -155,11 +155,12 @@
 
       <button class="pill" onclick="window.location.href='/project'">
         <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="2" y1="12" x2="22" y2="12"/>
-          <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z"/>
+          <rect x="4" y="2" width="16" height="20" rx="2"/>
+          <line x1="8" y1="6" x2="16" y2="6"/>
+          <line x1="8" y1="10" x2="16" y2="10"/>
+          <line x1="8" y1="14" x2="12" y2="14"/>
         </svg>
-        look something up
+        Project Analyze
       </button>
 
     </div>

@@ -1124,7 +1124,7 @@
 }
 
 .hero-image {
-  width: 140px;
+  width: 160px;
   height: auto;
   object-fit: contain;
   opacity: 0.95;
@@ -1163,13 +1163,13 @@
 }
 
 .eye-left {
-  top: 49.09%;
-  left: 45.07%;
+  top: 51.2538%;
+  left: 27.2658%;
 }
 
 .eye-right {
-  top: 47.83%;
-  left: 57.21%;
+  top: 49.2555%;
+  left: 66.0688%;
 }
 
 /* Action Pills placed below Chat input */
@@ -1419,10 +1419,10 @@
   }
 
   .eye {
-    width: 6px !important;
-    height: 9px !important;
-    margin-left: -3px !important;
-    margin-top: -4.5px !important;
+    width: 3px !important;
+    height: 5px !important;
+    margin-left: -1.5px !important;
+    margin-top: -2.5px !important;
   }
 
   /* Chat Page (/chat) specifics */
